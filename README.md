@@ -1,4 +1,4 @@
-# 🏪 Campanha de Lojas Participantes
+# 🏪 Campanhas 
 
 ![Docker](https://img.shields.io/badge/Docker-✔️-blue)  
 ![Vue](https://img.shields.io/badge/Vue.js-3-green)  
