@@ -8,13 +8,17 @@ import { swaggerUi, swaggerSpec } from "./infrastructure/swagger/swaggerConfig.j
 import { errorHandler } from "./infrastructure/middleware/errorHandle.js";
 
 const app = express();
+const port = process.env.PORT || 8000;
 
 // Habilita JSON
 app.use(express.json());
 
-// CORS configurado
+// CORS configurado para frontend local e hospedado
 app.use(cors({
-  origin: ["http://localhost:5173", "http://127.0.0.1:5173"], // front local
+  origin: [
+    "http://localhost:5173",       // frontend rodando local
+    "http://127.0.0.1:5173",       // fallback localhost
+  ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
@@ -38,5 +42,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // Middleware de erro
 app.use(errorHandler);
 
-// **Export para Vercel**
-export default app;
+// Listen em 0.0.0.0 para permitir acesso externo
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Servidor rodando em http://localhost:${port}`);
+  console.log(`Swagger docs em http://localhost:${port}/api-docs`);
+});
