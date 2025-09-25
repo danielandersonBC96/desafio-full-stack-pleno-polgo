@@ -18,7 +18,6 @@ app.use(cors({
   origin: [
     "http://localhost:5173",       // frontend rodando local
     "http://127.0.0.1:5173",       // fallback localhost
-    "https://meu-frontend.vercel.app" // frontend hospedado no Vercel
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
