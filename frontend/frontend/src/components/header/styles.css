@@ -1,0 +1,125 @@
+/* Header */
+.header {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  z-index: 1000;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+/* Logo */
+.logo {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: white;
+  background-color: black;
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+}
+
+/* Menu Desktop */
+.menu-desktop {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+}
+
+.menu-desktop li a {
+  text-decoration: none;
+  color: #111827;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.menu-desktop li a:hover {
+  color: #2563eb;
+}
+
+/* Botão Login */
+.btn-login {
+  background-color: #111827;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-login:hover {
+  background-color: #1f2937;
+}
+
+/* Hamburger Mobile */
+.hamburger {
+  display: none; /* inicialmente escondido */
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+/* Overlay escuro */
+.overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 998;
+}
+
+/* Mobile Menu full-screen lateral */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 250px;
+  height: 100%;
+  background-color: white;
+  box-shadow: -4px 0 12px rgba(0,0,0,0.2);
+  padding: 2rem 1.5rem;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mobile-menu li a {
+  color: #111827;
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+.mobile-menu li a:hover {
+  color: #2563eb;
+}
+
+/* Transição suave do menu mobile */
+.slide-enter-active, .slide-leave-active {
+  transition: transform 0.3s ease;
+}
+
+.slide-enter-from { transform: translateX(100%); }
+.slide-enter-to { transform: translateX(0); }
+.slide-leave-from { transform: translateX(0); }
+.slide-leave-to { transform: translateX(100%); }
+
+/* Responsividade: apenas hamburger no mobile */
+@media (max-width: 768px) {
+  .menu-desktop {
+    display: none !important; /* força sumir no mobile */
+  }
+  .hamburger {
+    display: block; /* mostra hamburger */
+  }
+}
