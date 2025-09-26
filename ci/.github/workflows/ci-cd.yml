@@ -1,0 +1,65 @@
+name: CI/CD Full Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  # ----------------- Backend -----------------
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install backend dependencies
+        run: |
+          cd backend
+          npm install
+
+      - name: Run backend tests
+        run: |
+          cd backend
+          npm test
+
+      - name: Deploy backend to Railway
+        uses: railwayapp/railway-action@v1
+        with:
+          apiKey: ${{ secrets.RAILWAY_API_KEY }}
+          projectName: "seu-projeto-backend"
+
+  # ----------------- Frontend -----------------
+  frontend:
+    needs: backend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install frontend dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Build frontend
+        run: |
+          cd frontend
+          npm run build
+
+      - name: Deploy frontend to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./frontend/dist

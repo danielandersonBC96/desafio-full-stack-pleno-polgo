@@ -1,0 +1,37 @@
+services:
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - "8000:8000"
+    environment:
+      NODE_ENV: production
+      MONGODB_URI: mongodb+srv://polgo:123456Ab@cluster0.6myv4ed.mongodb.net/
+      JWT_SECRET: segredo_super_forte
+      JWT_EXPIRES_IN: 1h
+      ADMIN_USER: admin
+      ADMIN_PASSWORD: 1234
+      FRONTEND_URL: http://frontend
+    networks:
+      - campanha-net
+    restart: always
+    command: npm start
+
+  frontend:
+    build:
+      context: ../frontend/frontend
+      dockerfile: Dockerfile.prod
+    container_name: frontend
+    ports:
+      - "3000:80"
+    environment:
+      VITE_API_URL: http://backend:8000
+    networks:
+      - campanha-net
+    restart: always
+
+networks:
+  campanha-net:
+    driver: bridge
