@@ -1,13 +1,22 @@
 import { ref, onMounted } from "vue";
 import axios from "axios";
-const ganhadores = ref([]);
-const totaisPorEstado = ref({});
 const API_URL = "http://localhost:8000";
+const ganhadores = ref([]);
+const lojas = ref([]);
 onMounted(async () => {
-    // Buscar ganhadores
-    const res = await axios.get(`${API_URL}/ganhadores`);
-    ganhadores.value = res.data.data; // array dentro de data
-    // Agregação por estado
+    try {
+        // Buscar ganhadores
+        const resGanhadores = await axios.get(`${API_URL}/ganhadores`);
+        ganhadores.value = resGanhadores.data.data; // array dentro de data
+        // Agregação por estado
+        const resLojas = await axios.get(`${API_URL}/lojas/agregacao`);
+        lojas.value = resLojas.data.data; // array dentro de data
+        console.log("Ganhadores:", ganhadores.value);
+        console.log("Lojas agregadas:", lojas.value);
+    }
+    catch (err) {
+        console.error("Erro ao carregar dados:", err);
+    }
 });
 debugger; /* PartiallyEnd: #3632/scriptSetup.vue */
 const __VLS_ctx = {};
@@ -94,7 +103,6 @@ var __VLS_dollars;
 const __VLS_self = (await import('vue')).defineComponent({
     setup: () => ({
         ganhadores: ganhadores,
-        totaisPorEstado: totaisPorEstado,
     }),
 });
 export default (await import('vue')).defineComponent({});

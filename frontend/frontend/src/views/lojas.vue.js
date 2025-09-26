@@ -1,13 +1,16 @@
 import { ref, onMounted } from "vue";
-import { getLojas } from '../service/api.js';
+import axios from "axios";
+const API_URL = "http://localhost:8000";
 const lojas = ref([]);
 onMounted(async () => {
     try {
-        const response = await getLojas();
-        lojas.value = response.data; // array de lojas
+        // Buscar apenas as lojas
+        const res = await axios.get(`${API_URL}/lojas`);
+        lojas.value = res.data.data; // vem dentro de "data"
+        console.log("Lojas:", lojas.value);
     }
-    catch (error) {
-        console.error("Erro ao carregar lojas:", error);
+    catch (err) {
+        console.error("Erro ao carregar lojas:", err);
     }
 });
 debugger; /* PartiallyEnd: #3632/scriptSetup.vue */
