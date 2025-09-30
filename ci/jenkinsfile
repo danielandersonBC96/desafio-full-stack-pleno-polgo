@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+
+    environment {
+        VERCEL_TOKEN = credentials('VERCEL_TOKEN') // Token Vercel no Jenkins
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/usuario/seu-repo.git'
+            }
+        }
+
+        stage('Build Backend') {
+            steps {
+                dir('backend') {
+                    sh 'npm install'
+                    sh 'npm test'
+                }
+            }
+        }
+
+        stage('Build Frontend') {
+            steps {
+                dir('frontend/frontend') {
+                    sh 'npm install'
+                    sh 'npm run build'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh 'npx vercel --prod --token $VERCEL_TOKEN'
+            }
+        }
+    }
+}
