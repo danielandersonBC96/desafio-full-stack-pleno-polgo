@@ -2,13 +2,13 @@ pipeline {
     agent any
 
     environment {
-        VERCEL_TOKEN = credentials('VERCEL_TOKEN') // Token Vercel no Jenkins
+        VERCEL_TOKEN = credentials('VERCEL_TOKEN') 
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/usuario/seu-repo.git'
+                git branch: 'main', url: 'https://github.com/danielandersonBC96/desafio-full-stack-pleno-polgo'
             }
         }
 
